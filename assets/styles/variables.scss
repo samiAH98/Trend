@@ -9,11 +9,8 @@ $color7: #DEDEDE;
 $border-radius: 2rem;
 $box-shadow: 1px 1px 8px #555;
 
-@font-face {
-  font-family: 'ToonyLinePersonalRegular';
-  src: local('/font/ToonyLinePersonalRegular-K7rde.otf');
-};
-$font-text1: Toony Line Fill PERSONAL;
+
+$font-text1: Toony Line PERSONAL;
 $size-titre: 2rem;
 $size-sous-titre: 1.5rem;
 $font-text2: Helvetica;
@@ -21,11 +18,11 @@ $size: 1rem;
 
 
 .logo {
-  font-family: "ToonyLinePersonalRegular", serif;
+  font-family: $font-text1;
   color: white;
-  font-size: 2rem;
+  font-size: 3rem;
   text-align: center;
-  text-shadow: 2px 2px 2px $color5;
+  text-shadow: 2px 2px $color5;
 }
 
 .my-card {
@@ -42,8 +39,8 @@ $size: 1rem;
 }
 
 .icone{
-  font-family: Jazz LET, fantasy, serif;
-  font-size: 3rem;
+  font-family: $font-text1;
+  font-size: 4rem;
   text-shadow: 2px 2px 2px black;
   color: white;
 }
@@ -170,8 +167,8 @@ $size: 1rem;
 
 .cards {
   margin: 2rem;
-  background-color: transparent;
-  opacity: 0.2;
+  background-color: #555;
+  opacity: 0.5;
   width: 350px;
   height: 450px;
   border: 2px solid;
