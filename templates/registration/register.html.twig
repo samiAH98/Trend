@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}INSCRIPTION{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <h1>S'inscrire</h1>
+
+    {#{{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+    {{ form_row(registrationForm.plainPasswordConfirm, {
+        label: 'ConfirmPassword'
+    }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}#}
+<div class="container">
+    <img src="/images/Brosen_windrose.svg-4.png" alt="étoile">
+    <div class="cards">
+        <div class="icone">
+    <p>TREND</p>
+    </div>
+
+
+    {{ form_start(registrationForm) }}
+
+{#    {{ form_row(registrationForm.type) }}#}
+        <div class="forminfo">
+        {#{% if registrationForm.type.vars.value == 'individual' %}
+
+        {{ form_row(registrationForm.individual.lastname) }}
+        {{ form_row(registrationForm.individual.firstname) }}
+        {{ form_row(registrationForm.individual.pseudo) }}
+        {{ form_row(registrationForm.individual.familySituation) }}
+        {{ form_row(registrationForm.individual.ageRange) }}
+        {{ form_row(registrationForm.individual.centerInterest) }}
+            {{ form_row(registrationForm.individual.save) }}
+
+    {% elseif registrationForm.type.vars.value == 'professional' %}
+
+        {{ form_row(registrationForm.professional.companyName) }}
+        {{ form_row(registrationForm.professional.siretNumber) }}
+        {{ form_row(registrationForm.professional.businessActivity) }}
+        {{ form_row(registrationForm.professional.sauvegarder) }}
+    {% endif %}#}
+
+    {# Afficher les champs communs à tous les types d'utilisateurs #}
+    {{ form_row(registrationForm.email) }}
+    {{ form_row(registrationForm.plainPassword) }}
+    {{ form_row(registrationForm.plainPasswordConfirm) }}
+    {{ form_row(registrationForm.adress) }}
+    {{ form_row(registrationForm.phoneNumber) }}
+   <div class="term">
+    {{ form_row(registrationForm.agreeTerms, {
+                label: 'Accepter les conditions'
+            }) }}
+   </div>
+            <button type="submit" class="btn btn-primary">S'inscrire</button>
+        </div>
+        {{ form_end(registrationForm) }}
+
+        <button type="submit" class="big-btn">Connectez-vous</button>
+    </div>
+    </div>
+{% endblock %}

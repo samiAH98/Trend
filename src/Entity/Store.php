@@ -21,8 +21,6 @@ class Store
     #[ORM\Column(length: 50)]
     private ?string $city = null;
 
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'store')]
-    private Collection $users;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'stores')]
     private Collection $category;
@@ -30,10 +28,13 @@ class Store
     #[ORM\OneToOne(inversedBy: 'store', cascade: ['persist', 'remove'])]
     private ?Location $location = null;
 
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'store')]
+    private Collection $users;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->category = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,36 +62,6 @@ class Store
     public function setCity(string $city): static
     {
         $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setStore($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getStore() === $this) {
-                $user->setStore(null);
-            }
-        }
 
         return $this;
     }
@@ -127,6 +98,36 @@ class Store
     public function setLocation(?Location $location): static
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setStore($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getStore() === $this) {
+                $user->setStore(null);
+            }
+        }
 
         return $this;
     }

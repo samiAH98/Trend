@@ -30,11 +30,11 @@ class Category
     #[ORM\Column(length: 50)]
     private ?string $multimedia = null;
 
-    #[ORM\ManyToOne(inversedBy: 'category')]
-    private ?User $user = null;
-
     #[ORM\ManyToMany(targetEntity: Store::class, mappedBy: 'category')]
     private Collection $stores;
+
+    #[ORM\ManyToOne(inversedBy: 'categorie')]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -106,18 +106,6 @@ class Category
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Store>
      */
@@ -141,6 +129,18 @@ class Category
         if ($this->stores->removeElement($store)) {
             $store->removeCategory($this);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

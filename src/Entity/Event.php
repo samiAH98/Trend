@@ -31,8 +31,6 @@ class Event
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'event')]
-    private Collection $users;
 
     #[ORM\OneToOne(inversedBy: 'event', cascade: ['persist', 'remove'])]
     private ?Type $type = null;
@@ -40,14 +38,15 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'event')]
     private ?Partner $partner = null;
 
-    #[ORM\OneToMany(targetEntity: UserPro::class, mappedBy: 'event')]
-    private Collection $userPros;
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'event')]
+    private Collection $users;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->userPros = new ArrayCollection();
     }
+
+
 
     public function getId(): ?int
     {
@@ -114,6 +113,31 @@ class Event
         return $this;
     }
 
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getPartner(): ?Partner
+    {
+        return $this->partner;
+    }
+
+    public function setPartner(?Partner $partner): static
+    {
+        $this->partner = $partner;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, User>
      */
@@ -144,57 +168,4 @@ class Event
         return $this;
     }
 
-    public function getType(): ?Type
-    {
-        return $this->type;
-    }
-
-    public function setType(?Type $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getPartner(): ?Partner
-    {
-        return $this->partner;
-    }
-
-    public function setPartner(?Partner $partner): static
-    {
-        $this->partner = $partner;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, UserPro>
-     */
-    public function getUserPros(): Collection
-    {
-        return $this->userPros;
-    }
-
-    public function addUserPro(UserPro $userPro): static
-    {
-        if (!$this->userPros->contains($userPro)) {
-            $this->userPros->add($userPro);
-            $userPro->setEvent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserPro(UserPro $userPro): static
-    {
-        if ($this->userPros->removeElement($userPro)) {
-            // set the owning side to null (unless already changed)
-            if ($userPro->getEvent() === $this) {
-                $userPro->setEvent(null);
-            }
-        }
-
-        return $this;
-    }
 }

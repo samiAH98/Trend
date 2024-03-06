@@ -23,6 +23,7 @@ class Notice
     #[ORM\ManyToOne(inversedBy: 'notice')]
     private ?User $user = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
