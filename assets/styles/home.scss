@@ -1,5 +1,6 @@
+
 body {
-  background-image: url("/public/images/bx.png");
+  background-image: url("/public/images/bx.jpg");
 }
 
 h1 {
@@ -12,31 +13,32 @@ img {
   padding-top: 5%;
   width: 30%;
   height: 20rem;
-  //box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5); //ombrage blanche
 }
 
-p {
-  font-family: $font-text1;
-  font-size: 4rem;
-  text-shadow: 2px 2px 2px black;
-  color: white;
-  opacity: 4;
-}
 
-.welcome {
+
+.container {
+  margin-top: 1rem;
   display: flex;
-  justify-content: space-evenly; /* Pour séparer les éléments sur l'axe horizontal */
+  justify-content: space-evenly; // Pour séparer les éléments sur l'axe horizontal *!
 }
 
 img {
-  align-self: flex-start; /* Pour aligner l'image en haut */
+  align-self: flex-start; // Pour aligner l'image en haut
 }
 
 .cards {
-  align-self: flex-end; /* Pour aligner les cartes en bas */
+  align-self: flex-end; // Pour aligner les cartes en bas
   display: flex;
   flex-direction: column;
 }
 
+@media screen and (max-width: 768px) {
+
+img {
+    display: none;
+  }
+
+}
 
 

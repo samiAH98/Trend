@@ -5,6 +5,7 @@ $color-dégradé: linear-gradient(#D3B873, #FFE7A8);
 $color5: #559FEA;
 $color6: #6F59A0;
 $color7: #DEDEDE;
+$color8: #D3D3D3;
 
 $border-radius: 2rem;
 $box-shadow: 1px 1px 8px #555;
@@ -167,8 +168,8 @@ $size: 1rem;
 
 .cards {
   margin: 2rem;
-  background-color: #555;
-  opacity: 0.5;
+  background-color: rgba(55, 66, 77, 0.8);
+  filter: blur(1%) brightness(65%) opacity(0.5);
   width: 350px;
   height: 450px;
   border: 2px solid;
@@ -178,6 +179,7 @@ $size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 .mids-cards {

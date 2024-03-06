@@ -6,15 +6,20 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\InheritanceType("JOINED")]
+#[ORM\DiscriminatorColumn(name: "type", type: "string")]
+#[ORM\DiscriminatorMap(["user" => "User", "individual" => "Individual", "professional" => "Professional"])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -32,41 +37,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $lastname = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $firstname = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $pseudo = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $FamilySituation = null;
-
     #[ORM\Column]
-    private ?int $AgeRange = null;
+    private ?int $phoneNumber = null;
 
-    #[ORM\Column]
-    private ?int $PhoneNumber = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $CenterInterest = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $city = null;
+    #[ORM\Column(length: 255)]
+    private ?string $adress = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $photo = null;
-
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?Transport $transport = null;
+    private ?string $picture = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Event $event = null;
 
-    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'user')]
-    private Collection $category;
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Transport $transport = null;
 
     #[ORM\OneToMany(targetEntity: Notice::class, mappedBy: 'user')]
     private Collection $notice;
@@ -74,13 +58,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Store $store = null;
 
-    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'user')]
+    private Collection $categorie;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Location $location = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
+    private ?string $type = null;
 
     public function __construct()
     {
-        $this->category = new ArrayCollection();
         $this->notice = new ArrayCollection();
+        $this->categorie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,122 +149,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): static
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): static
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(?string $pseudo): static
-    {
-        $this->pseudo = $pseudo;
-
-        return $this;
-    }
-
-    public function getFamilySituation(): ?string
-    {
-        return $this->FamilySituation;
-    }
-
-    public function setFamilySituation(string $FamilySituation): static
-    {
-        $this->FamilySituation = $FamilySituation;
-
-        return $this;
-    }
-
-    public function getAgeRange(): ?int
-    {
-        return $this->AgeRange;
-    }
-
-    public function setAgeRange(int $AgeRange): static
-    {
-        $this->AgeRange = $AgeRange;
-
-        return $this;
-    }
-
     public function getPhoneNumber(): ?int
     {
-        return $this->PhoneNumber;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(int $PhoneNumber): static
+    public function setPhoneNumber(int $phoneNumber): static
     {
-        $this->PhoneNumber = $PhoneNumber;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
 
-    public function getCenterInterest(): ?string
+    public function getAdress(): ?string
     {
-        return $this->CenterInterest;
+        return $this->adress;
     }
 
-    public function setCenterInterest(string $CenterInterest): static
+    public function setAdress(string $adress): static
     {
-        $this->CenterInterest = $CenterInterest;
+        $this->adress = $adress;
 
         return $this;
     }
 
-    public function getCity(): ?string
+    public function getPicture(): ?string
     {
-        return $this->city;
+        return $this->picture;
     }
 
-    public function setCity(string $city): static
+    public function setPicture(?string $picture): static
     {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getPhoto(): ?string
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto(?string $photo): static
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function getTransport(): ?Transport
-    {
-        return $this->transport;
-    }
-
-    public function setTransport(?Transport $transport): static
-    {
-        $this->transport = $transport;
+        $this->picture = $picture;
 
         return $this;
     }
@@ -290,32 +197,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategory(): Collection
+    public function getTransport(): ?Transport
     {
-        return $this->category;
+        return $this->transport;
     }
 
-    public function addCategory(Category $category): static
+    public function setTransport(?Transport $transport): static
     {
-        if (!$this->category->contains($category)) {
-            $this->category->add($category);
-            $category->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        if ($this->category->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getUser() === $this) {
-                $category->setUser(null);
-            }
-        }
+        $this->transport = $transport;
 
         return $this;
     }
@@ -362,6 +251,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategorie(): Collection
+    {
+        return $this->categorie;
+    }
+
+    public function addCategorie(Category $categorie): static
+    {
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie->add($categorie);
+            $categorie->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategorie(Category $categorie): static
+    {
+        if ($this->categorie->removeElement($categorie)) {
+            // set the owning side to null (unless already changed)
+            if ($categorie->getUser() === $this) {
+                $categorie->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getLocation(): ?Location
     {
         return $this->location;
@@ -372,5 +291,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->location = $location;
 
         return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
     }
 }

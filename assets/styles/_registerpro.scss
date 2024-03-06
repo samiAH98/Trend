@@ -1,0 +1,57 @@
+
+.forminfo > div > input,
+.btn,
+.big-btn {
+  color: $color2;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.forminfo > div > input {
+  height: 2rem;
+  margin-top: 10px;
+  width: 100%;
+  border: 2px solid $color2;
+  background-color:  rgba(55, 66, 77, 0.8);
+  filter: blur(1%) brightness(65%);
+  color: $color2;
+}
+
+.btn {
+  color: $color2;
+  border: 2px solid $color2;
+  height: 2rem;
+  width: 60%;
+  background-color:  rgba(55, 66, 77, 0.8);
+  filter: blur(1%) brightness(65%);
+}
+
+.big-btn {
+  color: $color2;
+  border: 2px solid $color2;
+  border-radius: 10px;
+  height: auto;
+  padding: 1rem 2rem;
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 3rem;
+  text-align: center;
+  display: inline-block;
+  background-color:  rgba(55, 66, 77, 0.8);
+  filter: blur(1%) brightness(65%);
+}
+
+.forminfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5rem;
+  color: $color2;
+}
+
+.icone {
+  padding-top: 5rem;
+
+}
+
+

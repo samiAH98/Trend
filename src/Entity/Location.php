@@ -23,13 +23,8 @@ class Location
     private ?float $latitude = null;
 
     #[ORM\OneToOne(mappedBy: 'location', cascade: ['persist', 'remove'])]
-    private ?User $user = null;
-
-    #[ORM\OneToOne(mappedBy: 'location', cascade: ['persist', 'remove'])]
     private ?Store $store = null;
 
-    #[ORM\OneToOne(mappedBy: 'location', cascade: ['persist', 'remove'])]
-    private ?UserPro $userPro = null;
 
     public function getId(): ?int
     {
@@ -72,27 +67,6 @@ class Location
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($user === null && $this->user !== null) {
-            $this->user->setLocation(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($user !== null && $user->getLocation() !== $this) {
-            $user->setLocation($this);
-        }
-
-        $this->user = $user;
-
-        return $this;
-    }
 
     public function getStore(): ?Store
     {
@@ -112,28 +86,6 @@ class Location
         }
 
         $this->store = $store;
-
-        return $this;
-    }
-
-    public function getUserPro(): ?UserPro
-    {
-        return $this->userPro;
-    }
-
-    public function setUserPro(?UserPro $userPro): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($userPro === null && $this->userPro !== null) {
-            $this->userPro->setLocation(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($userPro !== null && $userPro->getLocation() !== $this) {
-            $userPro->setLocation($this);
-        }
-
-        $this->userPro = $userPro;
 
         return $this;
     }
