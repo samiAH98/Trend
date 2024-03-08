@@ -1,0 +1,24 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.form-control {
+  text-align: center;
+  height: 2rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid $color2;
+  background-color:  rgba(55, 66, 77, 0.8);
+  filter: blur(1%) brightness(65%);
+  color: $color2;
+}
+
+.login {
+  margin-top: 9rem;
+  width: 100%;
+}
+
