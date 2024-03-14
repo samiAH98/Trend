@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\InheritanceType("JOINED")]
 #[ORM\DiscriminatorColumn(name: "type", type: "string")]
-#[ORM\DiscriminatorMap(["user" => "User", "individual" => "Individual", "professional" => "Professional"])]
+#[ORM\DiscriminatorMap(["user" => "User", "professional" => "Professional"])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -46,6 +46,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $lastname = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $pseudo = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $familySituation = null;
+
+    #[ORM\Column]
+    private ?int $ageRange = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $centerInterest = null;
+
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Event $event = null;
 
@@ -67,6 +85,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
     private ?string $type = null;
+
+    #[ORM\Column]
+    private ?int $cheks = null;
 
     public function __construct()
     {
@@ -181,6 +202,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPicture(?string $picture): static
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): static
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getFamilySituation(): ?string
+    {
+        return $this->familySituation;
+    }
+
+    public function setFamilySituation(string $familySituation): static
+    {
+        $this->familySituation = $familySituation;
+
+        return $this;
+    }
+
+    public function getAgeRange(): ?int
+    {
+        return $this->ageRange;
+    }
+
+    public function setAgeRange(int $ageRange): static
+    {
+        $this->ageRange = $ageRange;
+
+        return $this;
+    }
+
+    public function getCenterInterest(): ?string
+    {
+        return $this->centerInterest;
+    }
+
+    public function setCenterInterest(string $centerInterest): static
+    {
+        $this->centerInterest = $centerInterest;
 
         return $this;
     }
@@ -308,5 +401,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    public function getCheks(): ?int
+    {
+        return $this->cheks;
+    }
+
+    public function setCheks(int $cheks): static
+    {
+        $this->cheks = $cheks;
+
+        return $this;
     }
 }

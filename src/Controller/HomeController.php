@@ -16,6 +16,8 @@ class HomeController extends AbstractController
         ]);
     }
 
+
+
     #[Route('/variables', name: 'variables')]
     public function test(): Response
     {
