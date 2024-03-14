@@ -24,6 +24,7 @@
   width: 60%;
   background-color:  rgba(55, 66, 77, 0.8);
   filter: blur(1%) brightness(65%);
+  margin-top: 8px;
 }
 
 .big-btn {
@@ -51,8 +52,14 @@
 }
 
 .icone {
+  margin-bottom: -50px;
   padding-top: 5rem;
-
 }
+
+#registration-form-part-2 {
+  margin-top: -3px;
+  text-align: center;
+}
+
 
 

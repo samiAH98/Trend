@@ -3,71 +3,79 @@
 {% block title %}INSCRIPTION{% endblock %}
 
 {% block body %}
+<div class="back">
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>S'inscrire</h1>
-
-    {#{{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-    {{ form_row(registrationForm.plainPasswordConfirm, {
-        label: 'ConfirmPassword'
-    }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}#}
+    <h1>OU EST CE QU'ON VA AUJOURD'HUI ?</h1>
 <div class="container">
     <img src="/images/Brosen_windrose.svg-4.png" alt="étoile">
   <div class="cards">
         <div class="icone">
     <p>TREND</p>
     </div>
-
-
     {{ form_start(registrationForm) }}
-
 {#    {{ form_row(registrationForm.type) }}#}
-         <div class="forminfo">
-            {#{% if registrationForm.type.vars.value == 'individual' %}
-
-            {{ form_row(registrationForm.individual.lastname) }}
-            {{ form_row(registrationForm.individual.firstname) }}
-            {{ form_row(registrationForm.individual.pseudo) }}
-            {{ form_row(registrationForm.individual.familySituation) }}
-            {{ form_row(registrationForm.individual.ageRange) }}
-            {{ form_row(registrationForm.individual.centerInterest) }}
-                {{ form_row(registrationForm.individual.save) }}
-
-        {% elseif registrationForm.type.vars.value == 'professional' %}
-
-            {{ form_row(registrationForm.professional.companyName) }}
+            }{#{{ form_row(registrationForm.professional.companyName) }}
             {{ form_row(registrationForm.professional.siretNumber) }}
             {{ form_row(registrationForm.professional.businessActivity) }}
-            {{ form_row(registrationForm.professional.sauvegarder) }}
-        {% endif %}#}
+            {{ form_row(registrationForm.professional.sauvegarder) }}#}
+             <div class="forminfo" id="registration-form-part-1">
 
-        {# Afficher les champs communs à tous les types d'utilisateurs #}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.plainPasswordConfirm) }}
-        {{ form_row(registrationForm.adress) }}
-        {{ form_row(registrationForm.phoneNumber) }}
-           <div class="term">
-            {{ form_row(registrationForm.agreeTerms, {
-                        label: 'Accepter les conditions'
-                    }) }}
-           </div>
-                <button type="submit" class="btn btn-primary">S'inscrire</button>
-        </div>
-        {{ form_end(registrationForm) }}
-        <a href="{{ path('app_login') }}" class="big-btn">Connectez-vous</a>
-   </div>
+                 {{ form_row(registrationForm.email) }}
+                 {{ form_row(registrationForm.plainPassword) }}
+                 {{ form_row(registrationForm.plainPasswordConfirm) }}
+                 {{ form_row(registrationForm.adress) }}
+                 {{ form_row(registrationForm.phoneNumber) }}
+                 <div class="term">
+                     {{ form_row(registrationForm.agreeTerms, {
+                         label: 'Accepter les conditions'
+                     }) }}
+                 </div>
+                 <button type="button" id="continue-button" class="btn btn-primary">Continuer</button>
+             </div>
+
+             <div class="forminfo" id="registration-form-part-2" style="display: none;">
+
+                 {{ form_row(registrationForm.lastname) }}
+                 {{ form_row(registrationForm.firstname) }}
+                 {{ form_row(registrationForm.pseudo) }}
+                 {{ form_row(registrationForm.familySituation) }}
+                 {{ form_row(registrationForm.ageRange) }}
+                 {{ form_row(registrationForm.centerInterest) }}
+                 <button type="submit" class="btn btn-primary">S'inscrire</button>
+             </div>
+
+            <div class="forminfo" id="registration-form-part-3" style="display: none">
+                <p>Athentification de compte
+                Veillez entrer le code que nous venons de vous envoyé par mail ou par téléphone </p>
+                {{ form_row(registrationForm.cheks, {label: 'code de vérification'}) }}
+                <a href="{{ path('app_login') }}" class="big-btn">Renvoyer un code? </a>
+      {{ form_end(registrationForm) }}
+            </div>
+
+      <a href="{{ path('app_login') }}" class="big-btn">Connectez-vous</a>
 </div>
+</div>
+    <script>
+        document.getElementById('continue-button').addEventListener('click', function() {
+            document.getElementById('registration-form-part-1').style.display = 'none';
+            document.getElementById('registration-form-part-2').style.display = 'block';
+        });
+
+        // Logique supplémentaire pour afficher la partie du code de vérification après la soumission du formulaire
+        /*var registrationForm = document.querySelector('#registration-form');
+        registrationForm.addEventListener('submit', function(event) {
+            var codeVerificationNeeded = true; // Définir à true si vous devez vérifier le code après l'inscription
+
+            if (codeVerificationNeeded) {
+                 // Empêcher la soumission du formulaire
+
+                // Masquer les parties précédentes du formulaire et afficher la partie du code de vérification
+                document.getElementById('registration-form-part-2').style.display = 'none';
+                document.getElementById('registration-form-part-3').style.display = 'block';
+            }
+        });*/
+    </script>
 {% endblock %}

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Individual;
 use App\Entity\Professional;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -37,7 +36,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Get the selected user type from the form
-            $type = $form->get('type')->getData();
+//            $type = $form->get('type')->getData();
 
             // Set the appropriate user type based on the selection
             /*switch ($type) {
@@ -79,44 +78,6 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-   /* #[Route('/register-individual', name: 'app_register')]
-    public function registerindividual(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-    {
-        $user = new Individual();
-
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Get the selected user type from the form
-
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('contact@trend.com', 'Trend'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app_home');
-        }
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
-    }*/
 
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
